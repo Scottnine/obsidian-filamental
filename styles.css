@@ -1,0 +1,176 @@
+/* Filamental plugin styles */
+
+/* ── Sidebar panel ──────────────────────────────────────────────── */
+.filamental-panel {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.filamental-empty {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  text-align: center;
+  padding: 24px 12px;
+}
+
+/* ── Entity type badge ──────────────────────────────────────────── */
+.filamental-type-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--background-secondary);
+  border-radius: 6px;
+}
+
+.filamental-type-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #7c6af7;
+}
+
+.filamental-type-label {
+  font-size: var(--font-small);
+  font-weight: 600;
+  color: var(--text-normal);
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+/* ── Connection count ───────────────────────────────────────────── */
+.filamental-conn-count {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 0 2px;
+}
+
+.filamental-conn-number {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-accent);
+  line-height: 1;
+}
+
+.filamental-conn-label {
+  font-size: var(--font-small);
+  color: var(--text-muted);
+}
+
+/* ── Connection list ────────────────────────────────────────────── */
+.filamental-conn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.filamental-conn-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: var(--font-small);
+  color: var(--text-normal);
+}
+
+.filamental-conn-item.filamental-conn-clickable {
+  cursor: pointer;
+}
+
+.filamental-conn-item.filamental-conn-clickable:hover {
+  background: var(--background-modifier-hover);
+}
+
+.filamental-conn-type {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.filamental-conn-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filamental-conn-more {
+  font-size: var(--font-small);
+  color: var(--text-muted);
+  padding: 4px 8px;
+  font-style: italic;
+}
+
+/* ── Action buttons ─────────────────────────────────────────────── */
+.filamental-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.filamental-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: var(--font-small);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.1s ease;
+}
+
+.filamental-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+.filamental-btn.filamental-btn--primary {
+  background: #7c6af7;
+  color: #fff;
+  border-color: transparent;
+}
+
+.filamental-btn.filamental-btn--primary:hover {
+  background: #6b5ce7;
+}
+
+/* ── Header section ─────────────────────────────────────────────── */
+.filamental-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  margin-bottom: 4px;
+}
+
+.filamental-header-logo {
+  color: #7c6af7;
+}
+
+.filamental-header-title {
+  font-size: var(--font-small);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Status bar ─────────────────────────────────────────────────── */
+.filamental-status {
+  color: var(--text-muted);
+  font-size: var(--font-smaller);
+}
