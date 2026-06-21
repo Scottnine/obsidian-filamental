@@ -234,7 +234,7 @@ class FilamentalSettingTab extends PluginSettingTab {
       .setDesc(
         'Filamental is a 3D knowledge graph desktop app. It reads the same markdown files as Obsidian, so your notes stay in sync automatically — no import needed. ' +
         'Best suited for focused project vaults rather than large personal knowledge bases. ' +
-        'Free 30-day trial, then requires a Pro subscription.'
+        'Free forever for one project vault. Pro is for professional and commercial use.'
       )
       .addButton((btn) =>
         btn
@@ -347,7 +347,7 @@ export default class FilamentalPlugin extends Plugin {
       await this.openExternal(url);
     } catch {
       new Notice(
-        'Filamental is not installed.\nDownload the free trial at filamental.space',
+        'Filamental is not installed.\nDownload free at filamental.space',
         6000,
       );
     }
