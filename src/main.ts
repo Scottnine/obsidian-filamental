@@ -76,8 +76,8 @@ class FilamentalView extends ItemView {
   constructor(leaf: WorkspaceLeaf, plugin: FilamentalPlugin) {
     super(leaf);
     this.plugin = plugin;
-    this._boundOnActiveLeafChange = () => this.refresh();
-    this._boundOnMetaChange = () => this.refresh();
+    this._boundOnActiveLeafChange = () => { void this.refresh(); };
+    this._boundOnMetaChange = () => { void this.refresh(); };
   }
 
   getViewType(): string { return VIEW_TYPE; }
@@ -102,7 +102,7 @@ class FilamentalView extends ItemView {
   async renderForFile(file: TFile | null) {
     const root = this.containerEl.children[1] as HTMLElement;
     root.empty();
-    root.style.overflow = 'auto';
+    root.setCssStyles({ overflow: 'auto' });
 
     const panel = root.createEl('div', { cls: 'filamental-panel' });
 
@@ -133,14 +133,14 @@ class FilamentalView extends ItemView {
     // Entity type badge
     const typeRow = panel.createEl('div', { cls: 'filamental-type-row' });
     const dot = typeRow.createEl('span', { cls: 'filamental-type-dot' });
-    dot.style.background = this.plugin.getTypeColour(fm.type);
+    dot.setCssStyles({ background: this.plugin.getTypeColour(fm.type) });
     typeRow.createEl('span', {
       text: fm.type.replace(/_/g, ' '),
       cls: 'filamental-type-label',
     });
 
     // Connection count
-    const relationships = (fm.relationships ?? []) as Relationship[];
+    const relationships = fm.relationships ?? [];
     const countRow = panel.createEl('div', { cls: 'filamental-conn-count' });
     countRow.createEl('span', { text: String(relationships.length), cls: 'filamental-conn-number' });
     countRow.createEl('span', {
@@ -168,7 +168,7 @@ class FilamentalView extends ItemView {
           item.addClass('filamental-conn-clickable');
           item.onclick = () => {
             const leaf = this.app.workspace.getLeaf(false);
-            leaf.openFile(resolvedFile);
+            void leaf.openFile(resolvedFile);
           };
         }
       }
@@ -240,7 +240,7 @@ class FilamentalSettingTab extends PluginSettingTab {
         btn
           .setButtonText('Download Filamental')
           .onClick(() => {
-            this.plugin.openExternal('https://filamental.space');
+            void this.plugin.openExternal('https://filamental.space');
           })
       );
   }
@@ -267,14 +267,14 @@ export default class FilamentalPlugin extends Plugin {
 
     // Commands
     this.addCommand({
-      id: 'open-vault-in-filamental',
-      name: 'View project vault in 3D (Filamental)',
+      id: 'open-vault',
+      name: 'View project vault in 3D',
       callback: () => this.openVaultInFilamental(),
     });
 
     this.addCommand({
-      id: 'show-filamental-panel',
-      name: 'Show Filamental panel',
+      id: 'show-panel',
+      name: 'Show panel',
       callback: () => this.activateView(),
     });
 
@@ -308,7 +308,7 @@ export default class FilamentalPlugin extends Plugin {
     this.app.workspace.onLayoutReady(async () => {
       await this.activateView();
       this.updateStatusBar();
-      if (this.settings.autoLaunch) this.openVaultInFilamental();
+      if (this.settings.autoLaunch) await this.openVaultInFilamental();
     });
   }
 
@@ -317,7 +317,7 @@ export default class FilamentalPlugin extends Plugin {
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData() as Partial<FilamentalSettings>);
   }
 
   async saveSettings() {
@@ -408,7 +408,7 @@ export default class FilamentalPlugin extends Plugin {
     const fm = this.app.metadataCache.getFileCache(file)?.frontmatter as NodeFrontmatter | undefined;
     if (!fm?.type) { this.statusBarEl.setText(''); return; }
     const label = fm.type.replace(/_/g, ' ');
-    const count = (fm.relationships as Relationship[] | undefined)?.length ?? 0;
+    const count = fm.relationships?.length ?? 0;
     this.statusBarEl.setText(`◈ ${label} · ${count}`);
   }
 
@@ -418,13 +418,13 @@ export default class FilamentalPlugin extends Plugin {
     const { workspace } = this.app;
     const existing = workspace.getLeavesOfType(VIEW_TYPE);
     if (existing.length > 0) {
-      workspace.revealLeaf(existing[0]);
+      await workspace.revealLeaf(existing[0]);
       return;
     }
     const leaf = workspace.getRightLeaf(false);
     if (leaf) {
       await leaf.setViewState({ type: VIEW_TYPE, active: true });
-      workspace.revealLeaf(leaf);
+      await workspace.revealLeaf(leaf);
     }
   }
 }
