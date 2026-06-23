@@ -111,6 +111,15 @@ class FilamentalView extends ItemView {
     header.createEl('span', { cls: 'filamental-header-logo', text: '◈' });
     header.createEl('span', { cls: 'filamental-header-title', text: 'Filamental' });
 
+    if (!this.plugin.isInstalled()) {
+      panel.createEl('p', {
+        text: 'Install Filamental (free) to view this vault as a 3D knowledge graph.',
+        cls: 'filamental-empty',
+      });
+      this.renderInstallButton(panel);
+      return;
+    }
+
     if (!file) {
       panel.createEl('p', { text: 'Open a note to see its graph position and connections.', cls: 'filamental-empty' });
       this.renderOpenButton(panel);
@@ -121,9 +130,8 @@ class FilamentalView extends ItemView {
     const fm = (cache?.frontmatter ?? {}) as NodeFrontmatter;
 
     if (!fm.type) {
-      // Not yet part of a Filamental world — nudge them to open the graph
       panel.createEl('p', {
-        text: 'This note is not yet in the graph. Open your project vault in Filamental to add it.',
+        text: 'Open this vault in Filamental to add this note to your 3D graph.',
         cls: 'filamental-empty',
       });
       this.renderOpenButton(panel);
@@ -190,7 +198,16 @@ class FilamentalView extends ItemView {
       text: 'Open 3D Graph',
       cls: 'filamental-btn filamental-btn--primary',
     });
-    btn.onclick = () => this.plugin.openVaultInFilamental();
+    btn.onclick = () => void this.plugin.openVaultInFilamental();
+  }
+
+  private renderInstallButton(panel: HTMLElement) {
+    const actions = panel.createEl('div', { cls: 'filamental-actions' });
+    const btn = actions.createEl('button', {
+      text: 'Download Filamental (free)',
+      cls: 'filamental-btn filamental-btn--primary',
+    });
+    btn.onclick = () => void this.plugin.openExternal('https://filamental.space');
   }
 }
 
@@ -334,9 +351,35 @@ export default class FilamentalPlugin extends Plugin {
     return null;
   }
 
+  // ── Install detection ──────────────────────────────────────────────────────
+
+  isInstalled(): boolean {
+    try {
+      if (process.platform === 'win32') {
+        const localAppData = process.env.LOCALAPPDATA ?? '';
+        return localAppData
+          ? fs.existsSync(path.join(localAppData, 'Filamental', 'filamental.exe'))
+          : false;
+      }
+      if (process.platform === 'darwin') {
+        const home = process.env.HOME ?? '';
+        return (
+          fs.existsSync('/Applications/Filamental.app') ||
+          (home ? fs.existsSync(path.join(home, 'Applications', 'Filamental.app')) : false)
+        );
+      }
+    } catch { /* ignore */ }
+    return false;
+  }
+
   // ── Filamental launch ──────────────────────────────────────────────────────
 
   async openVaultInFilamental() {
+    if (!this.isInstalled()) {
+      new Notice('Filamental is not installed. Download free at filamental.space', 6000);
+      await this.openExternal('https://filamental.space');
+      return;
+    }
     const vaultPath = this.getVaultPath();
     if (!vaultPath) {
       new Notice('Filamental requires a local vault on disk.');
@@ -346,10 +389,7 @@ export default class FilamentalPlugin extends Plugin {
     try {
       await this.openExternal(url);
     } catch {
-      new Notice(
-        'Filamental is not installed.\nDownload free at filamental.space',
-        6000,
-      );
+      new Notice('Could not launch Filamental. Try opening it manually.', 4000);
     }
   }
 
