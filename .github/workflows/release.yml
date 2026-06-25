@@ -33,4 +33,3 @@ jobs:
             main.js
             styles.css
             manifest.json
-            versions.json
