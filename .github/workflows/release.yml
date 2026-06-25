@@ -16,15 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
+      # main.js is pre-built by scripts/release-obsidian.sh in the desktop repo
+      # and committed here before the tag is pushed. No build step needed.
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v2
@@ -40,3 +33,4 @@ jobs:
             main.js
             styles.css
             manifest.json
+            versions.json
