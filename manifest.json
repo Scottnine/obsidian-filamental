@@ -1,10 +1,10 @@
 {
   "id": "filamental",
-  "name": "Filamental",
+  "name": "3D Filamental Graph",
   "version": "2.0.0",
   "minAppVersion": "1.7.2",
-  "description": "View your project vault in 3D using Filamental. Both apps use the same markdown files, so your notes stay in sync automatically. Free forever for one project — Pro for professional and commercial use.",
-  "author": "Scott Turnbull",
+  "description": "Explore your vault as a living 3D knowledge graph. Full physics simulation, type-coloured nodes, and live sync with the Filamental desktop app. Free to try.",
+  "author": "CosimoScott",
   "authorUrl": "https://filamental.space",
   "fundingUrl": "https://filamental.space",
   "isDesktopOnly": true
