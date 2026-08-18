@@ -57,7 +57,7 @@ Filamental is a standalone 3D knowledge graph app that reads the same markdown f
 - Drone export and AI integration
 - Works with any vault size
 
-**Free to download and free to keep**, with no account and no card. [Get it at filamental.space](https://filamental.space)
+**Free to download and free to keep**, with no account and no card. Available on **Windows, macOS and Linux**. [Get it at filamental.space](https://filamental.space)
 
 ---
 
@@ -73,8 +73,7 @@ Filamental is a standalone 3D knowledge graph app that reads the same markdown f
 
 - Obsidian 1.7.2 or later
 - Desktop only (uses the local filesystem)
-- The 3D graph runs on Windows, macOS and Linux
-- **Open in Filamental** currently detects the desktop app on Windows and macOS only. On Linux the graph works normally and that one button offers the download page instead.
+- Available on Windows, macOS and Linux
 
 ---
 
