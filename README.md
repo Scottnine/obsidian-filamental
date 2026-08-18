@@ -4,6 +4,8 @@ Explore your vault as a **living 3D knowledge graph** - right inside Obsidian. E
 
 No import. No export. No duplicate files. Your markdown stays exactly where it is.
 
+**Free, with no account and nothing to sign up for.**
+
 ---
 
 ## What you get
@@ -55,7 +57,7 @@ Filamental is a standalone 3D knowledge graph app that reads the same markdown f
 - Drone export and AI integration
 - Works with any vault size
 
-**Free to try for 30 days.** [Download at filamental.space](https://filamental.space)
+**Free to download and free to keep**, with no account and no card. [Get it at filamental.space](https://filamental.space)
 
 ---
 
@@ -71,7 +73,8 @@ Filamental is a standalone 3D knowledge graph app that reads the same markdown f
 
 - Obsidian 1.7.2 or later
 - Desktop only (uses the local filesystem)
-- Windows supported now - macOS coming soon
+- The 3D graph runs on Windows, macOS and Linux
+- **Open in Filamental** currently detects the desktop app on Windows and macOS only. On Linux the graph works normally and that one button offers the download page instead.
 
 ---
 
